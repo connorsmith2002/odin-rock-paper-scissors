@@ -1,16 +1,17 @@
 let playerSelection = "";
 let value = -1;
-let options = [{"rock": 0}, {"paper": 1} ,{"scissors": 2}];
 let myScore = 0;
 let compScore = 0;
+let tie = false;
 
 function computerPlay() {
-    return Math.floor(Math.random() * options.length);
+    return Math.floor(Math.random() * 3);
 }
 
 function playRound(playerSelection, computerSelection) {
     if (playerSelection == computerSelection) {
         console.log("It's a tie!");
+        return true;
     } else if (playerSelection == 0) {
         if (computerSelection == 1) {
             console.log("You Lose! Paper beats Rock!");
@@ -36,6 +37,7 @@ function playRound(playerSelection, computerSelection) {
             myScore += 1;
         }
     }
+    return false;
 }
 
 function game() {
@@ -55,17 +57,15 @@ function game() {
         }
 
         let computer = computerPlay();
-        playRound(value, computer);
+        if (playRound(value, computer)) {
+            tie = true;
+        }
         console.log("My Score: " + myScore + " Computer Score: " + compScore);
 
-        if (myScore == 3) {
-            console.log("You Win!");
-            break;
+        if (tie) {
+            i--;
         }
-        if (compScore == 3) {
-            console.log("You Lose!");
-            break;
-        }
+        tie = false;
     }
 
     if (myScore == compScore) {
