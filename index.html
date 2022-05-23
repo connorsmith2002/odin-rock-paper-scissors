@@ -1,12 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rock Paper Scissors</title>
-</head>
-<body>
-    <script src="rps.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Rock Paper Scissors</title>
+        <link rel="stylesheet" href="./css/style.css" />
+        <script src="rps.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <h1>Welcome to Rock, Paper, Scissors</h1>
+            <h2>The winner will be the first to 5.<br />Good Luck!</h2>
+        </header>
+        <div class="buttons">
+            <button class="rock">
+                <img src="./images/rock.png" alt="pic of Rock" />
+                Rock
+            </button>
+            <button class="paper">
+                <img src="./images/paper.png" alt="pic of paper" />
+                Paper
+            </button>
+            <button class="scissors">
+                <img src="./images/scissors.png" alt="pic of Scissors" />
+                Scissors
+            </button>
+        </div>
+        <div class="scores">
+            <h2 id="myScore">Your Score: <span id="mySpan">0</span></h2>
+            <h2 id="compScore">Computer Score: <span id="compSpan">0</span></h2>
+        </div>
+    </body>
 </html>

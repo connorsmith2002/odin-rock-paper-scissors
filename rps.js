@@ -1,82 +1,106 @@
-let playerSelection = "";
-let value = -1;
-let myScore = 0;
-let compScore = 0;
-let tie = false;
+let buttons = document.querySelectorAll("button");
+let win = false;
+let playerValue = -1;
+
+let score = 0;
+let cScore = 0;
+
+buttons.forEach(function (button) {
+    button.addEventListener("click", function (e) {
+        let c = computerPlay();
+        if (button.classList.contains("rock")) {
+            playerValue = 0;
+        } else if (button.classList.contains("paper")) {
+            playerValue = 1;
+        } else {
+            playerValue = 2;
+        }
+        playRound(playerValue, c);
+    });
+});
 
 function computerPlay() {
     return Math.floor(Math.random() * 3);
 }
 
 function playRound(playerSelection, computerSelection) {
-    if (playerSelection == computerSelection) {
-        console.log("It's a tie!");
-        return true;
-    } else if (playerSelection == 0) {
-        if (computerSelection == 1) {
-            console.log("You Lose! Paper beats Rock!");
-            compScore += 1;
+    let gameOver = true;
+
+    // Configure Score
+    // I choose Rock
+    if (playerSelection == 0) {
+        // Computer chooses rock
+        if (computerSelection == 0) {
+            // change nothing, it was a tie
+        } else if (computerSelection == 1) {
+            // Computer Chooses Paper
+            cScore += 1;
+            let d = document.querySelector("#compSpan");
+            d.innerHTML = cScore.toString();
         } else {
-            console.log("You Win! Rock beats Scissors");
-            myScore += 1;
+            // Computer Chooses Scissors
+            score += 1;
+            let d = document.querySelector("#mySpan");
+            d.innerHTML = score.toString();
         }
     } else if (playerSelection == 1) {
         if (computerSelection == 0) {
-            console.log("You Win! Paper beats Rock!");
-            myScore += 1;
+            score += 1;
+            let d = document.querySelector("#mySpan");
+            d.innerHTML = score.toString();
+        } else if (computerSelection == 1) {
+            // change nothing, it was a tie
         } else {
-            console.log("You Lose! Scissors beats Paper!");
-            compScore += 1;
+            cScore += 1;
+            let d = document.querySelector("#compSpan");
+            d.innerHTML = cScore.toString();
         }
-    }  else {
+    } else {
         if (computerSelection == 0) {
-            console.log("You Lose! Rock beats Scissors!");
-            compScore += 1;
+            cScore += 1;
+            let d = document.querySelector("#compSpan");
+            d.innerHTML = cScore.toString();
+        } else if (computerSelection == 1) {
+            score += 1;
+            let d = document.querySelector("#mySpan");
+            d.innerHTML = score.toString();
         } else {
-            console.log("You Win! Scissors beats Paper!");
-            myScore += 1;
+            // change nothing, it was a tie
         }
     }
-    return false;
-}
 
-function game() {
-    for (i = 0; i < 5; i++) {
-
-        playerSelection = prompt("Choose rock, paper, or scissors: ");
-        switch (playerSelection.toUpperCase()) {
-            case "ROCK":
-                value = 0;
-                break;
-            case "PAPER":
-                value = 1;
-                break;
-            case "SCISSORS":
-                value = 2;
-                break;
+    if (score == 5 || cScore == 5) {
+        // Determine if I am the winner
+        let winner = false;
+        if (score == 5) {
+            winner = true;
         }
 
-        let computer = computerPlay();
-        if (playRound(value, computer)) {
-            tie = true;
-        }
-        console.log("My Score: " + myScore + " Computer Score: " + compScore);
+        let scores = document.querySelectorAll("span");
+        scores.forEach(function (button) {
+            button.removeAttribute("id");
+        });
 
-        if (tie) {
-            i--;
-        }
-        tie = false;
-    }
+        let container = document.querySelector(".scores");
 
-    if (myScore == compScore) {
-        console.log("It's a tie");
-    }
-    if (myScore > compScore) {
-        console.log("You Win!");
-    }
-    if (myScore < compScore) {
-        console.log("You Lose!");
+        let decision = document.createElement("h2");
+        decision.classList.add("decision");
+        if (winner) {
+            decision.style.color = "green";
+            decision.innerHTML = "Congratulations! You Win!";
+        } else {
+            decision.style.color = "red";
+            decision.innerHTML = "That's too bad! Maybe Next Time.";
+        }
+        container.appendChild(decision);
+
+        let button = document.createElement("button");
+        button.classList.add("playAgain");
+        button.innerHTML = "Play Again?";
+        container.appendChild(button);
+
+        button.addEventListener("click", function (e) {
+            location.reload();
+        });
     }
 }
-
-game();
