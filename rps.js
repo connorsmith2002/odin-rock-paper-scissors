@@ -24,8 +24,6 @@ function computerPlay() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    let gameOver = true;
-
     // Configure Score
     // I choose Rock
     if (playerSelection == 0) {
@@ -67,6 +65,15 @@ function playRound(playerSelection, computerSelection) {
         } else {
             // change nothing, it was a tie
         }
+    }
+
+    let a = document.querySelector("#compChoice");
+    if (computerSelection == 0) {
+        a.innerHTML = "The computer chose Rock!";
+    } else if (computerSelection == 1) {
+        a.innerHTML = "The computer chose Paper!";
+    } else {
+        a.innerHTML = "The computer chose Scissors!";
     }
 
     if (score == 5 || cScore == 5) {
